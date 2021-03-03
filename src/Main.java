@@ -26,16 +26,18 @@ public class Main {
 	public static ArrayList<Integer> semaforos = new ArrayList<Integer>();
 	public static boolean stop=true;
 	
+	
 
 	synchronized public static Interseccion[] getIntersecciones() {
 		return intersecciones;
 	}
 	
-
+	
 	public static void main(String[] args) throws IOException {
 		leerfichero("a");
 		cantidadSemaforos();
 		creaIntersecciones();
+		
 		
 		//SALEN LOS COCHES
 		for (int i = 0; i < coches.length; i++) {//LOS COCHES SE ENCONTRARÁN TODOS LOS SEMAFOROS EL ROJOS HASTA QUE EL CONTROLADOR DE LOS SEMAFOROS COMIENCEN (MENOS LOS QUE ESTAN SIEMPRE EN VERDE)
@@ -59,6 +61,8 @@ public class Main {
 		
 		escribirFichero("submit");
 	}
+
+
 
 	private static ArrayList<Integer> establecePrioridades(ArrayList<String> callesEntrantes) {
 
@@ -86,7 +90,7 @@ public class Main {
 				}
 			}
 			ArrayList<Integer> prioridades=establecePrioridades(callesEntrantes);
-			intersecciones[i]=new Interseccion(i,callesEntrantes,prioridades,calles);
+			intersecciones[i]=new Interseccion(i,callesEntrantes,prioridades,calles,coches);
 		}
 	}
 

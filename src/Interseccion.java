@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Interseccion extends Thread {
 
@@ -11,16 +12,21 @@ public class Interseccion extends Thread {
 	public ArrayList<Integer> prioridades;
 	public int tiempoTotal = Main.tiempoTotal;
 	public Calle[] calles;
+	public Coche[] coches;
 
 	// PASAMOS EL FLAG PARA INICIALIZAR EL SEMAFORO DEL COLOR QUE NOS INTERESE
-	public Interseccion(int id, ArrayList<String> callesEntrantes, ArrayList<Integer> prioridades, Calle[] calles) {
+	public Interseccion(int id, ArrayList<String> callesEntrantes, ArrayList<Integer> prioridades, Calle[] calles, Coche[] coches) {
 		// System.out.println("INTERSECCION: " + id);
 		this.callesEntrantes = callesEntrantes;
 		this.id = id;
 		this.prioridades = prioridades;
 		this.calles = calles;
+		this.coches=coches;
 		crearSemaforos();
+		
 	}
+
+
 
 	public void run() {
 
@@ -54,13 +60,17 @@ public class Interseccion extends Thread {
 		} while (!Main.stop);
 	}
 
+	
 	private void crearSemaforos() {
 
+		int semaforoComienzoVerde=semaforoComienzaVerde();
 		int cuantos = cuantosRepartir();
 		semaforos = new Semaforo[callesEntrantes.size()];
+		boolean verde;
 
-		if (callesEntrantes.size() <= 1) {// SI EN LA INTERSECCION SOLO HAY UNA CALLE ENTRANTE LO PONEMOS VERDE
-			// SIEMPRE
+		
+		if (callesEntrantes.size() <= 1) {// SI EN LA INTERSECCION SOLO HAY 1 CALLE ENTRANTE LO PONEMOS VERDE
+
 			boolean flag = false;
 			for (int k = 0; k < calles.length && !flag; k++) {
 				if (calles[k].getNombre().equals(callesEntrantes.get(0))) {
@@ -71,12 +81,11 @@ public class Interseccion extends Thread {
 				}
 			}
 		} else {
-			for (int i = prioridades.size() - 1; i >= 0; i--) {// LO TENGO QUE HACER AL REVER PORQUE AL ELIMINAR EL
-																// INDEX SE REPOSICIONAN HACIA DELANTE Y EL FOR FALLA
+			for (int i = prioridades.size() - 1; i >= 0; i--) {// LO TENGO QUE HACER AL REVES PORQUE AL ELIMINAR EL
 
 				int max = 0;
 				int indexMax = 0;
-
+				
 				if (i == 0) {
 					max = prioridades.get(i);
 					indexMax = i;
@@ -84,26 +93,20 @@ public class Interseccion extends Thread {
 					max = prioridades.get(i);
 					indexMax = i;
 				}
-
-				if (max != 0) {
+				
+				if (max != 0) {//SI VAN A PASAR COCHES
 					boolean flag = false;
-					boolean verde;
-
-					if (i == prioridades.size() - 1) {// EL PRIMERO A VERDE LOS DEMAS EN ROJO AL EMPEZAR
-						verde = true;
-					} else {
-						verde = false;
-					}
-
+					
+					
 					for (int k = 0; k < calles.length && !flag; k++) {
 						if (calles[k].getNombre().equals(callesEntrantes.get(i))) {
-							semaforos[i] = new Semaforo(verde, callesEntrantes.get(i), calculaTiempo(max, cuantos),
+							semaforos[i] = new Semaforo(false, callesEntrantes.get(i), calculaTiempo(max, cuantos),
 									false, false);// CREO EL SEMAFORO
 							calles[k].setSemaforo(semaforos[i]);// LE PASO EL SEMAFORO A LA CALLE
 							flag = true;
 						}
 					}
-				} else {
+				} else {//SI NO VAN A PASAR COCHES
 					boolean flag = false;
 					for (int j = 0; j < calles.length && !flag; j++) {
 						if (calles[j].getNombre().equals(callesEntrantes.get(i))) {
@@ -111,16 +114,22 @@ public class Interseccion extends Thread {
 							calles[j].setSemaforo(semaforos[i]);// LE PASO EL SEMAFORO A LA CALLE
 							flag = true;
 						}
-
 					}
 				}
-
 				prioridades.remove(i);
 			}
 		}
-
 	}
 
+	private void semaforoComienzaVerde() {
+
+		for (int i = 0; i < semaforos.length; i++) {
+			for (int j = 0; j < coches.length; j++) {
+				if(semaforos[i].)
+			}
+		}
+	}
+	
 	private int cuantosRepartir() {
 		int cuantos = 0;
 		for (int i = 0; i < prioridades.size(); i++) {

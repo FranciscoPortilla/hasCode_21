@@ -1,5 +1,6 @@
 
 public class Coche extends Thread {
+	
 	private int idCoche;
 	private String[] callesRecorrido;
 	private Calle[] calles;
@@ -8,22 +9,21 @@ public class Coche extends Thread {
 		this.idCoche = id;
 		this.callesRecorrido = callesRecorrido;
 		this.calles = calles;
-	}
-
-	public void run() {
+		
 		
 		System.out.println(" Recorrido: ");
 		for (int i = 0; i < callesRecorrido.length; i++) {
 			System.out.println(getName()+" "+callesRecorrido[i]);
 		}
+	}
+
+	public void run() {
 		
 		for (int i = 1; i < callesRecorrido.length; i++) {
 			boolean flag=false;
 			for (int j = 0; j < calles.length && !flag; j++) {
 				if (callesRecorrido[i].equals(calles[j].getNombre())) {//SI COINCIDE EL NOMBRE DE LA CALLE LO MANDO A ESA CALLE A ESPERAR
 					calles[j].espera(getName(),i+"/"+callesRecorrido.length);
-					//int interseccion = calles[j].getTermina();
-					//Main.getIntersecciones()[interseccion].esperar(callesRecorrido[i],interseccion,getName(),calles[j].getDuracion(),i+"/"+callesRecorrido.length); //LO RECOJO SINCRONIZADO
 					flag=true;
 				}
 			}
@@ -54,5 +54,7 @@ public class Coche extends Thread {
 	public void setCalles(Calle[] calles) {
 		this.calles = calles;
 	}
+
+
 
 }

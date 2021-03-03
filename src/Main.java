@@ -37,22 +37,23 @@ public class Main {
 		cantidadSemaforos();
 		creaIntersecciones();
 		
-		//COMIENZAN A FUNCIONAR LOS SEMAFOROS
-		
 		//SALEN LOS COCHES
 		for (int i = 0; i < coches.length; i++) {//LOS COCHES SE ENCONTRARÁN TODOS LOS SEMAFOROS EL ROJOS HASTA QUE EL CONTROLADOR DE LOS SEMAFOROS COMIENCEN (MENOS LOS QUE ESTAN SIEMPRE EN VERDE)
 			coches[i].start();
 		}
 		
-		ContadorTiempo contador=new ContadorTiempo(tiempoTotal);
-		contador.start();
-		
+		int cont=0;
 		do {
-			
 			for (int i = 0; i < intersecciones.length; i++) {
 				intersecciones[i].start();//COMIENZAN A FUNCIONAR LOS SEMAFOROS
 			}
 			
+			if(cont==0) {
+				ContadorTiempo contador=new ContadorTiempo(tiempoTotal);
+				contador.start();
+			}
+			
+			cont++;
 		} while (!stop);
 		
 		
@@ -63,7 +64,6 @@ public class Main {
 
 		ArrayList<Integer> prioridades=new ArrayList<Integer>();
 		for (int i = 0; i < callesEntrantes.size(); i++) {
-			//prioridades.set(i, 0);
 			prioridades.add(0);
 			for (int j = 0; j < coches.length; j++) {
 				for (int j2 = 1; j2 < coches[j].getCallesRecorrido().length; j2++) {//empiezo desde 1 porque el primero no es una calle
@@ -86,11 +86,10 @@ public class Main {
 				}
 			}
 			ArrayList<Integer> prioridades=establecePrioridades(callesEntrantes);
-			intersecciones[i]=new Interseccion(i,callesEntrantes,prioridades);
+			intersecciones[i]=new Interseccion(i,callesEntrantes,prioridades,calles);
 		}
 	}
 
-	
 	
 	public static void leerfichero(String name) throws IOException {
 		File f = new File(name + ".txt");

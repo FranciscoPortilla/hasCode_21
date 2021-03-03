@@ -13,11 +13,7 @@ public class Semaforo {
 		this.timpoVerde = tiempoVerde;
 		this.siempreVerde = siempreVerde;
 		this.siempreRojo=siempreRojo;
-		System.out.println("-->Semaforo calle: " + nombreCalle + " color:" + flag + " timepoVerde: " + tiempoVerde
-				+ " siempre verde: " + siempreVerde);
 	}
-
-
 
 	// CAMBIAMOS LA LUZ DEL SEMÁFORO
 	public void switchLight() {
@@ -40,7 +36,7 @@ public class Semaforo {
 		this.siempreVerde = siempreVerde;
 	}
 
-	synchronized public boolean isFlag() {
+	public boolean isFlag() {
 		return flag;
 	}
 
@@ -48,7 +44,7 @@ public class Semaforo {
 		this.flag = flag;
 	}
 
-	synchronized public String getNombreCalle() {
+	public String getNombreCalle() {
 		return nombreCalle;
 	}
 

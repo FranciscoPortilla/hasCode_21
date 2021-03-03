@@ -12,12 +12,21 @@ public class ContadorTiempo extends Thread{
 	
 	
 	public void run() {
-		try {
-			sleep(500);
-		} catch (InterruptedException e) {e.printStackTrace();}
+		System.out.println("***************************************************************************");
+		System.out.println("************************** COMIENZA EL TIEMPO *****************************");
+		System.out.println("***************************************************************************");
+
+		
+	
 		do {
+			
 			segundos++;
-		}while(segundos<=this.totalSegundos);
+		}while(segundos<=totalSegundos);
+		
+		System.out.println("***************************************************************************");
+		System.out.println("************************** SE ACABÓ EL TIEMPO *****************************");
+		System.out.println("***************************************************************************");
+
 		Main.stop=true;
 		
 	}

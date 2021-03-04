@@ -34,7 +34,7 @@ public class Main {
 	
 	
 	public static void main(String[] args) throws IOException {
-		leerfichero("a");
+		leerfichero("c");
 		cantidadSemaforos();
 		creaIntersecciones();
 		
@@ -166,7 +166,8 @@ public class Main {
 
 		int tiempoVerde;
 		
-		pw.println(intersecciones.length);
+		
+		pw.println(intersecciones.length);//NUERO DE INTERSECCIONES
 		for (int i = 0; i < intersecciones.length; i++) {
 			pw.println(intersecciones[i].getid());//NUMERO INTERSECCION
 			pw.println(intersecciones[i].getCallesEntrantes().size()); // CALLES ENTRANTES
@@ -177,10 +178,7 @@ public class Main {
 						pw.println(intersecciones[i].getCallesEntrantes().get(j) + " " + tiempoVerde);
 					}
 				}
-				
-
 			}
-
 		}
 		pw.close();
 		fw.close();
